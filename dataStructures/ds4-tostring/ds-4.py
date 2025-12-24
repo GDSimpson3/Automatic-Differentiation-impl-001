@@ -21,11 +21,11 @@ class Term:
 @dataclass
 class functionDS:
     functionFlag: FunctionFlag
-    generalCoefficient: Optional[float] = 1
+    generalCoefficient: Optional[float] = None
     terms: Optional[List[Term]] = None
     functionType: Optional[FunctionType] = None
     nestedFunction: Optional["functionDS"] = None
-    functionExponent: Optional[float] = 1
+    functionExponent: Optional[float] = None
 
 @dataclass
 class functionMain:
@@ -39,7 +39,6 @@ functionPY = functionMain(
     
             functionDS(
                 functionFlag=FunctionFlag.POLY,
-                generalCoefficient=3,
                 terms=[
                     Term(2, 2),
                     Term(3, 1),
@@ -68,7 +67,7 @@ def ToStringFunc(functionParam: functionMain):
     def FunctionDSToString(functionDSParam: functionDS):
         CompSTR = ''
 
-        print(functionDSParam.functionFlag.value)
+        # print(functionDSParam.functionFlag.value)
         # 
         if functionDSParam.functionFlag.value == 'P':
             if functionDSParam.terms:
@@ -79,7 +78,9 @@ def ToStringFunc(functionParam: functionMain):
 
         # print('sdfs')
 
-        return CompSTR
+        return f'({functionDSParam.generalCoefficient or ''}({CompSTR}))^{functionDSParam.functionExponent or '1'}'
+
+    MainouterFunc = ''
 
     for Component1 in functionParam.MainFunction: # functionDS
 
@@ -90,10 +91,15 @@ def ToStringFunc(functionParam: functionMain):
         # CompSTR = CompSTR + f"{Component1.generalCoefficient or ''}"
 
 
+        MainouterFunc = MainouterFunc + f' + {FunctionDSToString(Component1)}'
+        # print(FunctionDSToString(Component1))
+    return MainouterFunc
 
-        print(FunctionDSToString(Component1))
+
+
+print(ToStringFunc(functionPY))
 
 
 
 
-ToStringFunc(functionPY)
+# ( -3( Tan( ( (2X^2 3X^1 4X^0 ) )^-1 ) ) )^1
