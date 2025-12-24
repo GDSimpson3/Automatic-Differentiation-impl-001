@@ -67,8 +67,7 @@ def ToStringFunc(functionParam: functionMain):
     def FunctionDSToString(functionDSParam: functionDS):
         CompSTR = ''
 
-        # print(functionDSParam.functionFlag.value)
-        # 
+
         if functionDSParam.functionFlag.value == 'P':
             if functionDSParam.terms:
                 for term in functionDSParam.terms:
@@ -84,15 +83,7 @@ def ToStringFunc(functionParam: functionMain):
 
     for Component1 in functionParam.MainFunction: # functionDS
 
-        # CompSTR = f""
-
-        # print(f'FLAG: {Component1.functionFlag.name}')
-
-        # CompSTR = CompSTR + f"{Component1.generalCoefficient or ''}"
-
-
         MainouterFunc = MainouterFunc + f' + {FunctionDSToString(Component1)}'
-        # print(FunctionDSToString(Component1))
     return MainouterFunc
 
 
