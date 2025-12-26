@@ -31,11 +31,14 @@ class functionDS:
     functionExponent: Optional[float] = None
     # f(x)g(x) as a term only
     productFunctionTERM: Optional[List["functionMain"]] = None
+    FunctionAsExponent: Optional[List["functionMain"]] = None
 
 
 @dataclass
 class functionMain:
     MainFunction: List[functionDS]
+    FunctionAsExponentMAIN: Optional[List["functionMain"]] = None
+
     productFunction: Optional[List["functionMain"]] = None
 
 
@@ -49,32 +52,52 @@ functionPY = functionMain(
                 Term(3, 1),
                 Term(4, 0)
             ],
-
-
-        ),
-
-
-        functionDS(
-            functionFlag=FunctionFlag.TRIG,
-            functionType=FunctionType.TAN,
-            generalCoefficient=-3,
-            nestedFunction=functionDS(
+            FunctionAsExponent=functionDS(
                 functionFlag=FunctionFlag.POLY,
-                terms=[Term(2, 2), Term(3, 1), Term(4, 0)],
-                functionExponent=-1
+                terms=[
+                    Term(2, 2),
+                    Term(3, 1),
+                    Term(4, 0)],
             )
+
         ),
+
+
+        # functionDS(
+        #     functionFlag=FunctionFlag.TRIG,
+        #     functionType=FunctionType.TAN,
+        #     generalCoefficient=-3,
+        #     nestedFunction=functionDS(
+        #         functionFlag=FunctionFlag.POLY,
+        #         terms=[Term(2, 2), Term(3, 1), Term(4, 0)],
+        #         functionExponent=-1
+        #     )
+        # ),
 
     ],
-    productFunction=[
-        functionDS(
-            functionFlag=FunctionFlag.POLY,
-            terms=[
-                Term(2, 2),
-                Term(3, 1),
-                Term(4, 0)],
-        )
-    ]
+    FunctionAsExponentMAIN=functionDS(
+        functionFlag=FunctionFlag.POLY,
+        terms=[
+            Term(2, 2),
+            Term(3, 1),
+            Term(4, 0)],
+    ),
+    # productFunction=[
+    #     functionDS(
+    #         functionFlag=FunctionFlag.POLY,
+    #         terms=[
+    #             Term(2, 2),
+    #             Term(3, 1),
+    #             Term(4, 0)],
+    #         FunctionAsExponent=functionDS(
+    #             functionFlag=FunctionFlag.POLY,
+    #             terms=[
+    #                 Term(2, 2),
+    #                 Term(3, 1),
+    #                 Term(4, 0)],
+    #         )
+    #     )
+    # ]
 )
 
 
@@ -97,7 +120,21 @@ def ToStringFunc(functionParam: functionMain):
                 CompSTR = CompSTR + \
                     f'({FunctionDSToString(TermsProductFunction)})'
 
-        return f'({functionDSParam.generalCoefficient or ''}({CompSTR}))^{functionDSParam.functionExponent or '1'}'
+        Exponent = ''
+
+        if functionDSParam.FunctionAsExponent:
+            Exponent = Exponent + \
+                f' ({FunctionDSToString(functionDSParam.FunctionAsExponent)})'
+
+        if functionDSParam.functionExponent:
+            Exponent = Exponent + f' {functionDSParam.functionExponent}'
+        
+        FinalReturn = f'({functionDSParam.generalCoefficient or ''}({CompSTR}))'
+        
+        if not Exponent == '':
+            FinalReturn = FinalReturn + f'^{Exponent}'
+
+        return FinalReturn
 
     MainouterFunc = ''
 
@@ -109,6 +146,18 @@ def ToStringFunc(functionParam: functionMain):
         for ProductFunction in functionParam.productFunction:
             MainouterFunc = MainouterFunc + \
                 f' ({FunctionDSToString(ProductFunction)})'
+
+    Exponent = ''
+
+    if functionParam.FunctionAsExponentMAIN:
+        Exponent = Exponent + \
+            f' ({FunctionDSToString(functionParam.FunctionAsExponentMAIN)})'
+
+    # if functionParam.functionExponent:
+    #     Exponent = Exponent + f' {functionParam.functionExponent}'
+    if not Exponent == '':
+        MainouterFunc = MainouterFunc + \
+            f'^{Exponent}'
 
     return MainouterFunc
 
@@ -163,4 +212,4 @@ def FX(functionParam: functionMain, X):
 
 
 print(ToStringFunc(functionPY))
-print(FX(functionPY, 1))
+# print(FX(functionPY, 1))
