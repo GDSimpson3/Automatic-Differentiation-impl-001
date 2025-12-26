@@ -4,9 +4,11 @@
 <h2>Function Representation</h2>
 
 F(x):
-<img width="964" height="98" alt="image" src="https://github.com/user-attachments/assets/cf1cf5f7-871a-4020-a988-ed7c76a9dd16" />
+
+<img width="821" height="86" alt="image" src="https://github.com/user-attachments/assets/050985ae-d536-452f-a414-912b78a1fb70" />
+
 ```
- + ((2X^2 3X^1 4X^0 ))^ (((2X^2 3X^1 4X^0 ))) + (-3(Tan(((2X^2 3X^1 4X^0 ))^ -1))) (((2X^2 3X^1 4X^0 ))^ (((2X^2 3X^1 4X^0 ))))^ (((2X^2 3X^1 4X^0 )))
+( + ((2X^2 3X^1 4X^0 ))^ (((2X^2 3X^1 4X^0 ))) + (-3(Tan(((2X^2 3X^1 4X^0 ))^ -1))) (((2X^2 3X^1 4X^0 ))^ (((2X^2 3X^1 4X^0 )))))^ (((2X^2 3X^1 4X^0 )))
 ```
 Datastructure:
 ```py
