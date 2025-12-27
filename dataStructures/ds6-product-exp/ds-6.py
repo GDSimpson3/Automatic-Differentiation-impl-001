@@ -201,10 +201,23 @@ def FX(functionParam: functionMain, X):
         if functionDSParam.productFunctionTERM:
             for TermsProductFunction in functionDSParam.productFunctionTERM:
                 CompCUMU = CompCUMU + FunctionDSFX(TermsProductFunction, X)
+                
+                
+        Exponent = 1
+
+        if functionDSParam.FunctionAsExponent:
+            Exponent = Exponent * FunctionDSFX(functionDSParam.FunctionAsExponent,X)
+
+        if functionDSParam.functionExponent:
+            Exponent = Exponent * functionDSParam.functionExponent
+
+        # FinalReturn = f'({functionDSParam.generalCoefficient or ''}({CompSTR}))'
+
+
 
         print(ToStringFunc(functionMain(MainFunction=[functionDSParam])))
 
-        return (functionDSParam.generalCoefficient or 1) * CompCUMU ** (functionDSParam.functionExponent or 1)
+        return (functionDSParam.generalCoefficient or 1) * CompCUMU ** Exponent
 
     MainouterFunc = 0
 
@@ -215,9 +228,22 @@ def FX(functionParam: functionMain, X):
     if functionParam.productFunction:
         for ProductFunction in functionParam.productFunction:
             MainouterFunc = MainouterFunc + FunctionDSFX(ProductFunction, X)
+            
+            
+    # GREATER EXPONENTS
+    Exponent = 1
+
+    if functionParam.FunctionAsExponentMAIN:
+        Exponent = Exponent * FunctionDSFX(functionParam.FunctionAsExponentMAIN, X)
+
+    # if functionParam.functionExponent:
+    #     Exponent = Exponent + f' {functionParam.functionExponent}'
+        
+    
+    MainouterFunc = MainouterFunc ** Exponent
 
     return MainouterFunc
 
 
 print(ToStringFunc(functionPY))
-# print(FX(functionPY, 1))
+print('----',FX(functionPY, 1))
