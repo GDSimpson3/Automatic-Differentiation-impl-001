@@ -162,7 +162,7 @@ def ToStringFunc(functionParam: functionMain):
     # if functionParam.functionExponent:
     #     Exponent = Exponent + f' {functionParam.functionExponent}'
     if not Exponent == '':
-        MainouterFunc = MainouterFunc + \
+        MainouterFunc = f'({MainouterFunc})' + \
             f'^{Exponent}'
 
     return MainouterFunc
