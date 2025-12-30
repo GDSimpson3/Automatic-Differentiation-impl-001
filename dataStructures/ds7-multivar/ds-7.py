@@ -68,41 +68,41 @@ functionPY = functionMain(
         ),
 
 
-        # functionDS(
-        #     functionFlag=FunctionFlag.TRIG,
-        #     functionType=FunctionType.TAN,
-        #     generalCoefficient=-3,
-        #     nestedFunction=functionDS(
-        #         functionFlag=FunctionFlag.POLY,
-        #         terms=[Term(2, 2,variable='x'), Term(3, 1,variable='x'), Term(4, 0,variable='x')],
-        #         functionExponent=-1
-        #     )
-        # ),
+        functionDS(
+            functionFlag=FunctionFlag.TRIG,
+            functionType=FunctionType.TAN,
+            generalCoefficient=-3,
+            nestedFunction=functionDS(
+                functionFlag=FunctionFlag.POLY,
+                terms=[Term(2, 2,variable='x'), Term(3, 1,variable='x'), Term(4, 0,variable='x')],
+                functionExponent=-1
+            )
+        ),
 
     ],
-    # FunctionAsExponentMAIN=functionDS(
-    #     functionFlag=FunctionFlag.POLY,
-    #     terms=[
-    #         Term(2, 2,variable='x'),
-    #         Term(3, 1,variable='x'),
-    #         Term(4, 0,variable='x')],
-    # ),
-    # productFunction=[
-    #     functionDS(
-    #         functionFlag=FunctionFlag.POLY,
-    #         terms=[
-    #             Term(2, 2,variable='x'),
-    #             Term(3, 1,variable='z'),
-    #             Term(4, 0,variable='x')],
-    #         FunctionAsExponent=functionDS(
-    #             functionFlag=FunctionFlag.POLY,
-    #             terms=[
-    #                 Term(2, 2,variable='x'),
-    #                 Term(3, 1,variable='x'),
-    #                 Term(4, 0,variable='x')],
-    #         )
-    #     )
-    # ]
+    FunctionAsExponentMAIN=functionDS(
+        functionFlag=FunctionFlag.POLY,
+        terms=[
+            Term(2, 2,variable='x'),
+            Term(3, 1,variable='x'),
+            Term(4, 0,variable='x')],
+    ),
+    productFunction=[
+        functionDS(
+            functionFlag=FunctionFlag.POLY,
+            terms=[
+                Term(2, 2,variable='x'),
+                Term(3, 1,variable='z'),
+                Term(4, 0,variable='x')],
+            FunctionAsExponent=functionDS(
+                functionFlag=FunctionFlag.POLY,
+                terms=[
+                    Term(2, 2,variable='x'),
+                    Term(3, 1,variable='x'),
+                    Term(4, 0,variable='x')],
+            )
+        )
+    ]
 )
 
 
