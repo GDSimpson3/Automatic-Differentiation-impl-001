@@ -44,6 +44,7 @@ class functionMain:
 
     Parameters: Optional[List[str]] = None # We need them to help with the function - even in product and nested
 
+
 functionPY = functionMain(
     
     Parameters= ['X','Y','Z'],
@@ -60,48 +61,48 @@ functionPY = functionMain(
                 functionFlag=FunctionFlag.POLY,
                 terms=[
                     Term(2, 2,variable='x'),
-                    Term(3, 1,variable='x'),
+                    Term(3, 1,variable='z'),
                     Term(4, 0,variable='x')],
             )
 
         ),
 
 
-        functionDS(
-            functionFlag=FunctionFlag.TRIG,
-            functionType=FunctionType.TAN,
-            generalCoefficient=-3,
-            nestedFunction=functionDS(
-                functionFlag=FunctionFlag.POLY,
-                terms=[Term(2, 2,variable='x'), Term(3, 1,variable='x'), Term(4, 0,variable='x')],
-                functionExponent=-1
-            )
-        ),
+        # functionDS(
+        #     functionFlag=FunctionFlag.TRIG,
+        #     functionType=FunctionType.TAN,
+        #     generalCoefficient=-3,
+        #     nestedFunction=functionDS(
+        #         functionFlag=FunctionFlag.POLY,
+        #         terms=[Term(2, 2,variable='x'), Term(3, 1,variable='x'), Term(4, 0,variable='x')],
+        #         functionExponent=-1
+        #     )
+        # ),
 
     ],
-    FunctionAsExponentMAIN=functionDS(
-        functionFlag=FunctionFlag.POLY,
-        terms=[
-            Term(2, 2,variable='x'),
-            Term(3, 1,variable='x'),
-            Term(4, 0,variable='x')],
-    ),
-    productFunction=[
-        functionDS(
-            functionFlag=FunctionFlag.POLY,
-            terms=[
-                Term(2, 2,variable='x'),
-                Term(3, 1,variable='z'),
-                Term(4, 0,variable='x')],
-            FunctionAsExponent=functionDS(
-                functionFlag=FunctionFlag.POLY,
-                terms=[
-                    Term(2, 2,variable='x'),
-                    Term(3, 1,variable='x'),
-                    Term(4, 0,variable='x')],
-            )
-        )
-    ]
+    # FunctionAsExponentMAIN=functionDS(
+    #     functionFlag=FunctionFlag.POLY,
+    #     terms=[
+    #         Term(2, 2,variable='x'),
+    #         Term(3, 1,variable='x'),
+    #         Term(4, 0,variable='x')],
+    # ),
+    # productFunction=[
+    #     functionDS(
+    #         functionFlag=FunctionFlag.POLY,
+    #         terms=[
+    #             Term(2, 2,variable='x'),
+    #             Term(3, 1,variable='z'),
+    #             Term(4, 0,variable='x')],
+    #         FunctionAsExponent=functionDS(
+    #             functionFlag=FunctionFlag.POLY,
+    #             terms=[
+    #                 Term(2, 2,variable='x'),
+    #                 Term(3, 1,variable='x'),
+    #                 Term(4, 0,variable='x')],
+    #         )
+    #     )
+    # ]
 )
 
 
@@ -205,7 +206,7 @@ def FX(functionParam: functionMain, ParametersMULTIVARIATE: List[int]):
             if functionDSParam.terms:
                 for term in functionDSParam.terms:
                     print(f'{term} ===== {term.variable} ----- { MapParameters(term.variable)}')
-                    CompCUMU = CompCUMU + term.coefficient * MapParameters(term.variable) ** term.exponent
+                    CompCUMU = CompCUMU + term.coefficient * (MapParameters(term.variable) ** term.exponent)
         # TRIG FUNC
         elif functionDSParam.functionFlag.value == 'T':
             CompCUMU = CompCUMU + \
@@ -232,7 +233,7 @@ def FX(functionParam: functionMain, ParametersMULTIVARIATE: List[int]):
 
         # print(ToStringFunc(functionMain(MainFunction=[functionDSParam])))
 
-        return (functionDSParam.generalCoefficient or 1) * CompCUMU ** Exponent
+        return (functionDSParam.generalCoefficient or 1) * (CompCUMU ** Exponent)
 
     MainouterFunc = 0
 
