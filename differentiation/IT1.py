@@ -1,5 +1,10 @@
 # [^,+,*,2,x,*,3,y,*,2,z]
 
+'''
+To those who read this, Happy New year!!!! '26
+'''
+
+
 from enum import Enum
 
 
