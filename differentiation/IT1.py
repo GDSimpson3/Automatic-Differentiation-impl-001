@@ -122,31 +122,7 @@ def FX_Generator(tokens, data_map):
 
 
 
-def split_args(tokens, n):
-    """
-    Takes a list of tokens and the number of arguments (n) needed.
-    Returns a list of lists, where each sub-list is a complete expression.
-    """
-    def get_one_expression(t_list):
-        if not t_list: return []
-        token = t_list.pop(0)
-        expr = [token]
-        
-        # Arity lookup
-        arity = 0
-        if token in {'+', '-', '*', '/', '^'}: arity = 2
-        elif token in {'sin', 'cos', 'ln', 'exp'}: arity = 1
-        
-        for _ in range(arity):
-            expr.extend(get_one_expression(t_list))
-        return expr
 
-    results = []
-    # Make a copy so we don't destroy the original token list during splitting
-    temp_tokens = list(tokens) 
-    for _ in range(n):
-        results.append(get_one_expression(temp_tokens))
-    return results
 
 def differentiate(tokens):
     if not tokens: return []
