@@ -5,20 +5,8 @@ from enum import Enum
 
 DatasetPl = ['^','+','*',2,'x','*',3,'y','*',2,'z']
 
-# for index, item in enumerate(DatasetPl):
-    # print(item)
-    
-class FunctionFlag(Enum):
-    EXP = "^"
-    MUL = "*"
-    ADD = "+"
-    
-Variables = ['x','y','z']
-    
-# def RootRecursion(DataPL):
-#     FirstChar = DataPL[0]
-    
-#     print(FirstChar)
+
+
     
 def toString(tokens):
     stack = []
@@ -56,13 +44,12 @@ def toString(tokens):
 # Example usage:
 # ln(x^2 + 1) in Prefix: ['ln', '+', '^', 'x', 2, 1]
 expression = ['ln', '+', '^', 'x', 2, 1]
-# print(toString(DatasetPl)) 
+print(toString(DatasetPl)) 
 # Output: ln((x ^ 2) + 1)
-   
+
    
     
-    
-# print(RootRecursion(DatasetPl))
+
 
 
 import numpy as np
@@ -130,4 +117,62 @@ def FX_Generator(tokens, data_map):
         
     return evaluate()
 
-print(FX_Generator(DatasetPl,{'x': 2, 'y': 1,'z':1}))
+# print(FX_Generator(DatasetPl,{'x': 2, 'y': 1,'z':1}))
+
+
+
+
+def split_args(tokens, n):
+    """
+    Takes a list of tokens and the number of arguments (n) needed.
+    Returns a list of lists, where each sub-list is a complete expression.
+    """
+    def get_one_expression(t_list):
+        if not t_list: return []
+        token = t_list.pop(0)
+        expr = [token]
+        
+        # Arity lookup
+        arity = 0
+        if token in {'+', '-', '*', '/', '^'}: arity = 2
+        elif token in {'sin', 'cos', 'ln', 'exp'}: arity = 1
+        
+        for _ in range(arity):
+            expr.extend(get_one_expression(t_list))
+        return expr
+
+    results = []
+    # Make a copy so we don't destroy the original token list during splitting
+    temp_tokens = list(tokens) 
+    for _ in range(n):
+        results.append(get_one_expression(temp_tokens))
+    return results
+
+def differentiate(tokens):
+    if not tokens: return []
+    
+    op = tokens.pop(0)
+
+    # Base Cases
+    if op == 'x':
+        return [1.0]
+    if isinstance(op, (int, float)):
+        return [0.0]
+
+    # Recursive Cases
+    if op == '+':
+        # Sum Rule: D(f+g) = D(f) + D(g)
+        f, g = split_args(tokens, 2)
+        return ['+'] + differentiate(f) + differentiate(g)
+
+    elif op == '*':
+        # Product Rule: D(f*g) = f*g' + g*f'
+        f, g = split_args(tokens, 2)
+        return ['+', '*', *f, *differentiate(g), '*', *g, *differentiate(f)]
+
+    elif op == 'ln':
+        # Chain Rule for ln: D(ln(f)) = (1/f) * D(f)
+        f, _ = split_args(tokens, 1)
+        return ['*', '/', 1.0, *f, *differentiate(f)]
+    
+print(differentiate(DatasetPl))
